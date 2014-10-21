@@ -8,7 +8,7 @@ class Contracts extends AbstractApi
     {
         return $this->post(array_merge(array(
 			'request' => 'contract',
-			'operation' => 'search ',
+			'operation' => 'search',
 		), $params));
     }
     public function get($params)

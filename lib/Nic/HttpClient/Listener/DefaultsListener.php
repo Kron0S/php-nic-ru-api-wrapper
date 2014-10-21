@@ -35,10 +35,22 @@ class DefaultsListener implements ListenerInterface
      */
     public function preSend(RequestInterface $request)
     {
-		$url  = $request->getUrl();
-		$url .= (false === strpos($url, '?') ? '?' : '&').utf8_encode(http_build_query($this->options, '', '&'));
+		$content = $request->getContent();
+		parse_str($content, $content);
+		$content = $content['SimpleRequest'];
 
-		$request->fromUrl(new Url($url));
+		$parameters = $this->options;
+		
+		foreach ($parameters as $key=>$param) {
+			$content .= "\n";
+			$content .= $key.":".$param;
+		}
+		$content = array(
+			'SimpleRequest' => $content,
+		);
+		// var_dump($content);die;
+	
+		$request->setContent(http_build_query($content));
     }
 
     /**

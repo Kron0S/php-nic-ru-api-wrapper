@@ -14,7 +14,6 @@ class Response extends BaseResponse
         $response = parent::getContent();
         if ($this->getHeader("Content-Type") === "text/plain") {
 			$content  = $response;
-			var_dump($content);die;
             // $content  = json_decode($response, true);
     
             // if (JSON_ERROR_NONE !== json_last_error()) {

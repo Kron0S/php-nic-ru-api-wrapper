@@ -98,17 +98,14 @@ class Client
     /**
      * Authenticate a user for all next requests
      *
-     * @param string      $token      Nic private token
-     * @param null|string $authMethod One of the AUTH_* class constants
-     * @param null|string $sudo
+     * @param string      $login
+     * @param string	  $password
      */
-    public function authenticate($token, $authMethod = null, $sudo = null)
+    public function authenticate($login, $password)
     {
         $this->httpClient->addListener(
             new AuthListener(
-                $authMethod,
-                $token,
-                $sudo
+                $login, $password
             )
         );
     }

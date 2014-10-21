@@ -50,7 +50,21 @@ abstract class AbstractApi implements ApiInterface
      */
     protected function post(array $parameters = array(), $requestHeaders = array())
     {
-        $response = $this->client->getHttpClient()->post('', $parameters, $requestHeaders);
+		$content = "";
+		$first = true;
+		foreach ($parameters as $key=>$param) {
+			if (!$first) {
+				$content .= "\n";
+			} else {
+				$first = false;
+			}
+			$content .= $key.":".$param;
+		}
+		$content = array(
+			'SimpleRequest' => $content,
+		);
+
+        $response = $this->client->getHttpClient()->post('', $content, $requestHeaders);
 
         return $response->getContent();
     }

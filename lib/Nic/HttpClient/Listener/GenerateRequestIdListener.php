@@ -35,14 +35,25 @@ class GenerateRequestIdListener implements ListenerInterface
      */
     public function preSend(RequestInterface $request)
     {
-		$url  = $request->getUrl();
+		$content = $request->getContent();
+		parse_str($content, $content);
+		$content = $content['SimpleRequest'];
+
 		$requestId = date('YmdHis.').getmypid().'@'.$this->partnerWebSite;
-		$query = array(
+		$parameters = array(
 			'request-id' => $requestId,
 		);
-		$url .= (false === strpos($url, '?') ? '?' : '&').utf8_encode(http_build_query($query, '', '&'));
-
-		$request->fromUrl(new Url($url));
+		
+		foreach ($parameters as $key=>$param) {
+			$content .= "\n";
+			$content .= $key.":".$param;
+		}
+		$content = array(
+			'SimpleRequest' => $content,
+		);
+		// var_dump($content);die;
+	
+		$request->setContent(http_build_query($content));
     }
 
     /**
