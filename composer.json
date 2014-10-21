@@ -1,0 +1,20 @@
+{
+	"name": "kron0s/php-nic-ru-api-wrapper",
+	"type": "library",
+	"description": "Nic.ru api wrapper",
+	"keywords": ["nic.ru", "api"],
+	"authors": [
+		{
+			"name": "Alexey Pushnikov",
+			"homepage": "http://kron0s.com"
+		}
+	],
+	"require": {
+		"php":                ">=5.3.2",
+		"ext-curl":           "*",
+		"kriswallsmith/buzz": ">=0.7"
+	},
+	"autoload": {
+		"psr-0": { "Nic\\": "lib/" }
+	}
+}
