@@ -6,32 +6,9 @@ use Nic\Api\MergeRequests;
 use Nic\Client;
 use Nic\Api\AbstractApi as Api;
 
-class Project extends AbstractModel
+class Contract extends AbstractModel
 {
     protected static $_properties = array(
-        'id',
-        'code',
-        'name',
-        'name_with_namespace',
-        'namespace',
-        'description',
-        'path',
-        'path_with_namespace',
-        'ssh_url_to_repo',
-        'http_url_to_repo',
-        'web_url',
-        'default_branch',
-        'owner',
-        'private',
-        'public',
-        'issues_enabled',
-        'merge_requests_enabled',
-        'wall_enabled',
-        'wiki_enabled',
-        'created_at',
-        'greatest_access_level',
-        'last_activity_at',
-        'snippets_enabled'
     );
 
     public static function fromArray(Client $client, array $data)

@@ -13,26 +13,19 @@ use Buzz\Util\Url;
 /**
  * @author Joseph Bielawski <stloyd@gmail.com>
  */
-class AuthListener implements ListenerInterface
+class GenerateRequestIdListener implements ListenerInterface
 {
     /**
-     * @var string
+     * @var array
      */
-    private $login;
+    private $partnerWebSite;
 
     /**
-     * @var string
+     * @param array      $partnerWebSite
      */
-    private $password;
-
-    /**
-     * @param string      $login
-     * @param string      $password
-     */
-    public function __construct($login, $password)
+    public function __construct($partnerWebSite)
     {
-        $this->login  = $login;
-        $this->password = $password;
+        $this->partnerWebSite = $partnerWebSite;
     }
 
     /**
@@ -43,7 +36,10 @@ class AuthListener implements ListenerInterface
     public function preSend(RequestInterface $request)
     {
 		$url  = $request->getUrl();
-		$query = array('login' => $this->login, 'password' => $this->password, );
+		$requestId = date('YmdHis.').getmypid().'@'.$this->partnerWebSite;
+		$query = array(
+			'request-id' => $requestId,
+		);
 		$url .= (false === strpos($url, '?') ? '?' : '&').utf8_encode(http_build_query($query, '', '&'));
 
 		$request->fromUrl(new Url($url));

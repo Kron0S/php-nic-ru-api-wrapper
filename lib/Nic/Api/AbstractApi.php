@@ -38,9 +38,9 @@ abstract class AbstractApi implements ApiInterface
     /**
      * {@inheritDoc}
      */
-    protected function get($path, array $parameters = array(), $requestHeaders = array())
+    protected function get(array $parameters = array(), $requestHeaders = array())
     {
-        $response = $this->client->getHttpClient()->get($path, $parameters, $requestHeaders);
+        $response = $this->client->getHttpClient()->get('', $parameters, $requestHeaders);
 
         return $response->getContent();
     }
@@ -48,9 +48,9 @@ abstract class AbstractApi implements ApiInterface
     /**
      * {@inheritDoc}
      */
-    protected function post($path, array $parameters = array(), $requestHeaders = array())
+    protected function post(array $parameters = array(), $requestHeaders = array())
     {
-        $response = $this->client->getHttpClient()->post($path, $parameters, $requestHeaders);
+        $response = $this->client->getHttpClient()->post('', $parameters, $requestHeaders);
 
         return $response->getContent();
     }
@@ -58,9 +58,9 @@ abstract class AbstractApi implements ApiInterface
     /**
      * {@inheritDoc}
      */
-    protected function patch($path, array $parameters = array(), $requestHeaders = array())
+    protected function patch(array $parameters = array(), $requestHeaders = array())
     {
-        $response = $this->client->getHttpClient()->patch($path, $parameters, $requestHeaders);
+        $response = $this->client->getHttpClient()->patch('', $parameters, $requestHeaders);
 
         return $response->getContent();
     }
@@ -68,9 +68,9 @@ abstract class AbstractApi implements ApiInterface
     /**
      * {@inheritDoc}
      */
-    protected function put($path, array $parameters = array(), $requestHeaders = array())
+    protected function put(array $parameters = array(), $requestHeaders = array())
     {
-        $response = $this->client->getHttpClient()->put($path, $parameters, $requestHeaders);
+        $response = $this->client->getHttpClient()->put('', $parameters, $requestHeaders);
 
         return $response->getContent();
     }
@@ -78,9 +78,9 @@ abstract class AbstractApi implements ApiInterface
     /**
      * {@inheritDoc}
      */
-    protected function delete($path, array $parameters = array(), $requestHeaders = array())
+    protected function delete(array $parameters = array(), $requestHeaders = array())
     {
-        $response = $this->client->getHttpClient()->delete($path, $parameters, $requestHeaders);
+        $response = $this->client->getHttpClient()->delete('', $parameters, $requestHeaders);
 
         return $response->getContent();
     }

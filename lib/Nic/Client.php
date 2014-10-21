@@ -10,24 +10,14 @@ use Nic\Exception\InvalidArgumentException;
 use Nic\HttpClient\HttpClient;
 use Nic\HttpClient\HttpClientInterface;
 use Nic\HttpClient\Listener\AuthListener;
+use Nic\HttpClient\Listener\DefaultsListener;
+use Nic\HttpClient\Listener\GenerateRequestIdListener;
 
 /**
  * Simple API wrapper for Nic
  */
 class Client
 {
-    /**
-     * Constant for authentication method. Indicates the default, but deprecated
-     * login with username and token in URL.
-     */
-    const AUTH_URL_TOKEN = 'url_token';
-
-    /**
-     * Constant for authentication method. Indicates the new login method with
-     * with username and token via HTTP Authentication.
-     */
-    const AUTH_HTTP_TOKEN = 'http_token';
-
     /**
      * @var array
      */
@@ -36,7 +26,7 @@ class Client
         'timeout'     => 60
     );
 
-    private $base_url = null;
+    private $base_url = 'https://www.nic.ru/dns/dealer';
 
     /**
      * The Buzz instance used to communicate with Nic
@@ -51,13 +41,12 @@ class Client
      * @param string               $baseUrl
      * @param null|ClientInterface $httpClient Buzz client
      */
-    public function __construct($baseUrl, ClientInterface $httpClient = null)
+    public function __construct(ClientInterface $httpClient = null)
     {
         $httpClient = $httpClient ?: new Curl();
         $httpClient->setTimeout($this->options['timeout']);
         $httpClient->setVerifyPeer(false);
 
-        $this->base_url     = $baseUrl;
         $this->httpClient   = new HttpClient($this->base_url, $this->options, $httpClient);
     }
 
@@ -71,8 +60,32 @@ class Client
     public function api($name)
     {
         switch ($name) {
-            case 'projects':
-                $api = new Api\Projects($this);
+            case 'contracts':
+                $api = new Api\Contracts($this);
+                break;
+            case 'accounts':
+                $api = new Api\Accounts($this);
+                break;
+            case 'domains':
+                $api = new Api\Domains($this);
+                break;
+            case 'orders':
+                $api = new Api\Orders($this);
+                break;
+            case 'service-objects':
+                $api = new Api\ServiceObjects($this);
+                break;
+            case 'services':
+                $api = new Api\Services($this);
+                break;
+            case 'contacts':
+                $api = new Api\Contacts($this);
+                break;
+            case 'servers':
+                $api = new Api\Servers($this);
+                break;
+            case 'redeleg-onlines':
+                $api = new Api\RedelegOnlines($this);
                 break;
 
 			default:
@@ -96,6 +109,34 @@ class Client
                 $authMethod,
                 $token,
                 $sudo
+            )
+        );
+    }
+
+    /**
+     * add defaults for every request
+     *
+     * @param array      $options
+     */
+    public function addDefaults($options)
+    {
+        $this->httpClient->addListener(
+            new DefaultsListener(
+                $options
+            )
+        );
+    }
+	
+    /**
+     * generate request-id
+     *
+     * @param string      $partner-web-site 
+     */
+    public function generateRequestId($partnerWebSite)
+    {
+        $this->httpClient->addListener(
+            new GenerateRequestIdListener(
+                $partnerWebSite
             )
         );
     }
