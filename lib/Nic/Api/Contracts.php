@@ -4,6 +4,7 @@ namespace Nic\Api;
 
 class Contracts extends AbstractApi
 {
+	protected $type = "contract";
     public function search($params)
     {
         return $this->post(array_merge(array(

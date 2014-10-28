@@ -4,6 +4,7 @@ namespace Nic\Api;
 
 class Orders extends AbstractApi
 {
+	protected $type = "order";
     public function create($params)
     {
         return $this->post(array_merge(array(
@@ -11,11 +12,11 @@ class Orders extends AbstractApi
 			'operation' => 'create',
 		), $params));
     }
-    public function create($params)
+    public function search($params)
     {
         return $this->post(array_merge(array(
 			'request' => 'order',
-			'operation' => 'create',
+			'operation' => 'search',
 		), $params));
     }
     public function get($params)
@@ -30,13 +31,6 @@ class Orders extends AbstractApi
         return $this->post(array_merge(array(
 			'request' => 'order',
 			'operation' => 'delete',
-		), $params));
-    }
-    public function swap($params)
-    {
-        return $this->post(array_merge(array(
-			'request' => 'order',
-			'operation' => 'swap',
 		), $params));
     }
 }

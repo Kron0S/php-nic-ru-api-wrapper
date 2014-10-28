@@ -4,6 +4,7 @@ namespace Nic\Api;
 
 class Contacts extends AbstractApi
 {
+	protected $type = "contact";
     public function create($params)
     {
         return $this->post(array_merge(array(
@@ -30,13 +31,6 @@ class Contacts extends AbstractApi
         return $this->post(array_merge(array(
 			'request' => 'contact',
 			'operation' => 'delete',
-		), $params));
-    }
-    public function domainSearch($params)
-    {
-        return $this->post(array_merge(array(
-			'request' => 'contact',
-			'operation' => 'domain-search',
 		), $params));
     }
 }

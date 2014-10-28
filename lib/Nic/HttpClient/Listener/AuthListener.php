@@ -42,19 +42,24 @@ class AuthListener implements ListenerInterface
      */
     public function preSend(RequestInterface $request)
     {
-		$content = $request->getContent();
-		parse_str($content, $content);
-		$content = $content['SimpleRequest'];
-
 		$parameters = array(
 			'login' => $this->login,
 			'password' => $this->password, 
 		);
 		
+		$content_out = "";
 		foreach ($parameters as $key=>$param) {
-			$content .= "\n";
-			$content .= $key.":".$param;
+			$content_out .= $key.":".$param;
+			$content_out .= "\n";
 		}
+		
+		$content = $request->getContent();
+		parse_str($content, $content);
+		$content = $content['SimpleRequest'];
+		$content = iconv('KOI8-R', 'UTF-8', $content);
+
+		$content = $content_out . $content;
+		
 		$content = iconv('UTF-8', 'KOI8-R', $content);
 		$content = array(
 			'SimpleRequest' => $content,

@@ -38,7 +38,7 @@ class ErrorListener implements ListenerInterface
      */
     public function postSend(RequestInterface $request, MessageInterface $response)
     {
-		$content = $response->getContent();
+		$content = $response->getArrayContent();
 		if (is_array($content) && isset($content['state']) && $content['state'] !== '200') {
 			throw new RuntimeException($content['statemsg'], (int)$content['state']);
 		}

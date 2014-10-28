@@ -4,6 +4,7 @@ namespace Nic\Api;
 
 class Servers extends AbstractApi
 {
+	protected $type = "server";
     public function create($params)
     {
         return $this->post(array_merge(array(
@@ -23,13 +24,6 @@ class Servers extends AbstractApi
         return $this->post(array_merge(array(
 			'request' => 'server',
 			'operation' => 'search',
-		), $params));
-    }
-    public function domainSearch($params)
-    {
-        return $this->post(array_merge(array(
-			'request' => 'server',
-			'operation' => 'domain-search',
 		), $params));
     }
     public function delete($params)

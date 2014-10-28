@@ -9,7 +9,7 @@ class Response extends BaseResponse
     /**
      * {@inheritDoc}
      */
-    public function getContent()
+    public function getArrayContent()
     {
         $response = parent::getContent();
         if ($this->getHeader("Content-Type") === "text/plain") {
@@ -69,5 +69,13 @@ class Response extends BaseResponse
         } else {
             return $response;
         }
+	}
+    /**
+     * {@inheritDoc}
+     */
+    public function getContent()
+    {
+        $response = parent::getContent();
+        return $response;
     }
 }

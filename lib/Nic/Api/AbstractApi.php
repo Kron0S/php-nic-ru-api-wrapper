@@ -11,6 +11,7 @@ use Nic\Client;
  */
 abstract class AbstractApi implements ApiInterface
 {
+	protected $type = "";
     /**
      * Default entries per page
      */
@@ -52,6 +53,25 @@ abstract class AbstractApi implements ApiInterface
     {
 		$content = "";
 		$first = true;
+		if (isset($parameters['request'])) {
+			$content .= "request:" . $parameters['request'] . "\n";
+			unset($parameters['request']);
+		}
+		if (isset($parameters['operation'])) {
+			$content .= "operation:" . $parameters['operation'] . "\n";
+			unset($parameters['operation']);
+		}
+		if (isset($parameters['subject-contract'])) {
+			$content .= "subject-contract:" . $parameters['subject-contract'] . "\n";
+			unset($parameters['subject-contract']);
+		}
+		if ($content !== "") {
+			$content .= "\n";
+		}
+		
+		if (count($parameters) > 0) {
+			$content .= "[" . $this->type . "]\n";
+		}
 		foreach ($parameters as $key=>$param) {
 			if (!$first) {
 				$content .= "\n";
@@ -67,7 +87,7 @@ abstract class AbstractApi implements ApiInterface
 
         $response = $this->client->getHttpClient()->post('', $content, $requestHeaders);
 
-        return $response->getContent();
+        return $response->getArrayContent();
     }
 
     /**

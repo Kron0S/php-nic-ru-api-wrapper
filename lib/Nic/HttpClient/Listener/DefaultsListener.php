@@ -35,16 +35,21 @@ class DefaultsListener implements ListenerInterface
      */
     public function preSend(RequestInterface $request)
     {
+		$parameters = $this->options;
+		
+		$content_out = "";
+		foreach ($parameters as $key=>$param) {
+			$content_out .= $key.":".$param;
+			$content_out .= "\n";
+		}
+
 		$content = $request->getContent();
 		parse_str($content, $content);
 		$content = $content['SimpleRequest'];
+		$content = iconv('KOI8-R', 'UTF-8', $content);
 
-		$parameters = $this->options;
+		$content = $content_out . $content;
 		
-		foreach ($parameters as $key=>$param) {
-			$content .= "\n";
-			$content .= $key.":".$param;
-		}
 		$content = iconv('UTF-8', 'KOI8-R', $content);
 		$content = array(
 			'SimpleRequest' => $content,
