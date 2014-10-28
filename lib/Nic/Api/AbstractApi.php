@@ -60,6 +60,7 @@ abstract class AbstractApi implements ApiInterface
 			}
 			$content .= $key.":".$param;
 		}
+		$content = iconv('UTF-8', 'KOI8-R', $content);
 		$content = array(
 			'SimpleRequest' => $content,
 		);

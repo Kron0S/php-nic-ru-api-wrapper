@@ -10,11 +10,15 @@ $client->addDefaults(array(
 	'lang' => 'ru',
 ));
 
-$client->api('contracts')->get(array(
-	'subject-contract' => '370/NIC-REG',
-));
+try {
+	$res = $client->api('contracts')->get(array(
+		'subject-contract' => '370/NIC-REG',
+	));
+	echo "\n\n";
+	var_dump($res);
+	echo "\n\n";
+} catch (Exception $e) {
+	var_dump($e->getCode());
+	var_dump($e->getMessage());
+}
 
-echo "\n\n";
-echo $client->getHttpClient()->getLastRequest();
-echo $client->getHttpClient()->getLastResponse();
-echo "\n\n";
